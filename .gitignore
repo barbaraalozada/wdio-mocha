@@ -15,6 +15,7 @@ allure-report/
 # IDE
 .idea/
 .vscode/
+.claude/
 *.swp
 *.swo
 *~
