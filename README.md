@@ -1,19 +1,21 @@
-# WebDriverIO + Mocha Test Automation Framework
+# WebDriverIO + Mocha Test Automation Project
 
-A modern, scalable test automation framework showcasing professional QA engineering practices with WebDriverIO, Mocha, and Allure reporting.
+A test automation portfolio project demonstrating QA engineering practices with WebDriverIO, Mocha, and Allure reporting.
 
-> Built with [Claude Code](https://claude.com/claude-code)
+> Project base created with [Claude Code](https://claude.com/claude-code). Tests and implementation built by me.
 
 ---
 
 ## 🎯 Purpose
 
-This project demonstrates professional test automation capabilities using industry-standard tools and best practices. It showcases:
+This is a portfolio project showcasing my ability to build test automation solutions using industry-standard tools. It demonstrates:
 
-- Clean architecture with Page Object Model (POM)
-- Modern JavaScript (ES Modules)
-- Comprehensive test reporting
-- Maintainable, scalable code structure
+- Clean code organization with Page Object Model
+- Modern JavaScript testing practices
+- Test reporting and documentation
+- Practical automation implementation
+
+**Note**: This is a learning/portfolio project, not a production-ready framework or reference implementation.
 
 ---
 
@@ -23,7 +25,7 @@ This project demonstrates professional test automation capabilities using indust
 
 ```
 wdio-mocha/
-├── src/                          # Framework source code
+├── src/                          # Source code (reusable components)
 │   ├── browser/                  # Browser management and configuration
 │   ├── config/                   # Environment and settings
 │   ├── elements/                 # Reusable UI element classes (Element Object Model)
@@ -121,7 +123,7 @@ npm run allure:report
 
 ## 🛠️ Tech Stack
 
-### Core Framework
+### Core Stack
 | Tool | Purpose |
 |------|---------|
 | **WebDriverIO v9** | Browser automation and test execution |
@@ -147,7 +149,7 @@ npm run allure:report
 
 ---
 
-## 📚 Framework Features
+## 📚 Project Features
 
 ### Automation Capabilities
 - ✅ Cross-browser support (Chrome configured)
@@ -228,17 +230,19 @@ Allure reports provide comprehensive insights:
 
 ## 👨‍💻 About This Project
 
-This framework showcases professional software quality engineering practices, including:
+This project demonstrates my test automation skills and approach to building maintainable test suites. It includes:
 
-- Modern test automation architecture
-- Industry-standard tools and patterns
-- Clean, maintainable code
-- Comprehensive reporting and debugging capabilities
+- Hands-on implementation of test cases
+- Application of design patterns (POM)
+- Use of modern JavaScript tooling
+- Test reporting setup
+
+The project base was generated with Claude Code, allowing me to focus on building tests and applying best practices rather than boilerplate setup.
 
 **Technologies**: JavaScript • WebDriverIO • Mocha • Allure
 
 ---
 
-## 📝 License
+## 📝 Note
 
-This project is created as a portfolio demonstration of automation testing capabilities.
+This is a portfolio/demonstration project created to showcase test automation capabilities. It is not intended as a production framework or reference implementation.
