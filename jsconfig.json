@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "checkJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*"]
+    }
+  },
+  "include": [
+    "test/**/*",
+    "src/**/*",
+    "src/config/wdio.conf.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "typeAcquisition": {
+    "enable": true,
+    "include": [
+      "mocha",
+      "chai",
+      "node"
+    ]
+  }
+}

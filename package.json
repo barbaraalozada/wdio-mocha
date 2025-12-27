@@ -4,8 +4,14 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "wdio run wdio.conf.js",
-    "test:headless": "wdio run wdio.conf.js --headless"
+    "all": "wdio run src/config/wdio.conf.js",
+    "all:headless": "wdio run src/config/wdio.conf.js --headless",
+    "add:remove:elements": "wdio run src/config/wdio.conf.js --spec 'test/specs/addRemoveElementsTest.js'",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "allure:report": "npm run allure:generate && npm run allure:open",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +28,7 @@
     "chromedriver": "^143.0.3",
     "dotenv": "^17.2.3",
     "eslint": "^9.39.2",
+    "eslint-plugin-import": "^2.32.0",
     "wdio-chromedriver-service": "^8.1.1"
   }
 }

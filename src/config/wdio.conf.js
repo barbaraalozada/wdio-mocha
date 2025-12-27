@@ -1,7 +1,8 @@
-import dotenv from 'dotenv';
 import path from 'path';
-import fs from 'fs-extra';
+
 import allure from '@wdio/allure-reporter';
+import dotenv from 'dotenv';
+import fs from 'fs-extra';
 
 dotenv.config();
 
@@ -46,7 +47,6 @@ export const config = {
   // ===================
   logLevel: 'info',
   bail: 0,
-  baseUrl: process.env.BASE_URL || 'https://the-internet.herokuapp.com',
   waitforTimeout: parseInt(process.env.DEFAULT_TIMEOUT) || 10000,
   connectionRetryTimeout: 120000,
   connectionRetryCount: 3,
@@ -63,7 +63,7 @@ export const config = {
     ['allure', {
       outputDir: 'allure-results',
       disableWebdriverStepsReporting: true,
-      disableWebdriverScreenshotsReporting: false,
+      disableWebdriverScreenshotsReporting: true,
     }]
   ],
 
@@ -80,14 +80,14 @@ export const config = {
   /**
    * Gets executed once before all workers get launched.
    */
-  onPrepare: function (config, capabilities) {
+  onPrepare: function () {
     fs.ensureDir(downloadDir);
   },
 
   /**
    * Gets executed before test execution begins
    */
-  before: function (capabilities, specs) {
+  before: function () {
     browser.maximizeWindow();
   },
 
@@ -95,7 +95,7 @@ export const config = {
    * Hook that gets executed after each test.
    * Takes a screenshot when a test fails and attaches it to the Allure report.
    */
-  afterTest: async function (test, context, { error, result, duration, passed, retries }) {
+  afterTest: async function (test, context, { passed }) {
     if (!passed) {
       const screenshot = await browser.takeScreenshot();
       allure.addAttachment('Screenshot on failure', Buffer.from(screenshot, 'base64'), 'image/png');

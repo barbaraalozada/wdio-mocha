@@ -1,3 +1,5 @@
+import Logger from '../helpers/Logger.js';
+
 /**
  * Base Page Object class
  * Contains common methods that can be used across all page objects
@@ -31,7 +33,7 @@ class BasePage {
   async isPageOpened () {
     Logger.info(`Waiting for page "${this.name}" to load`);
     const isOpened = await this.uniqueElement.state().waitForDisplayed({
-      timeout: Timeouts.pageLoadTime
+      timeout: 30000
     });
     Logger.info(`Page "${this.name}" is opened - "${isOpened}"`);
     return isOpened;
