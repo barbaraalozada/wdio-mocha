@@ -6,16 +6,18 @@ A test automation portfolio project demonstrating QA engineering practices with 
 
 ---
 
-## 🎯 Purpose
+## 👨‍💻 About This Project
 
-This is a portfolio project showcasing my ability to build test automation solutions using industry-standard tools. It demonstrates:
+This portfolio project demonstrates my test automation skills using industry-standard tools and practices. Key highlights:
 
-- Clean code organization with Page Object Model
-- Modern JavaScript testing practices
-- Test reporting and documentation
-- Practical automation implementation
+- **Test Implementation**: I built all test cases and page objects
+- **Design Patterns**: Applied Page Object Model for maintainability  
+- **Modern JavaScript**: Used ES Modules and async/await patterns
+- **Test Reporting**: Configured Allure for comprehensive test reports
 
-**Note**: This is a learning/portfolio project, not a production-ready framework or reference implementation.
+The project base was generated with Claude Code to handle initial boilerplate, allowing me to focus on test development and applying automation best practices.
+
+**Technologies**: JavaScript • WebDriverIO • Mocha • Allure Report
 
 ---
 
@@ -225,24 +227,3 @@ Allure reports provide comprehensive insights:
 - [Mocha Testing Framework](https://mochajs.org/)
 - [Chai Assertion Library](https://www.chaijs.com/)
 - [Allure Report Documentation](https://docs.qameta.io/allure/)
-
----
-
-## 👨‍💻 About This Project
-
-This project demonstrates my test automation skills and approach to building maintainable test suites. It includes:
-
-- Hands-on implementation of test cases
-- Application of design patterns (POM)
-- Use of modern JavaScript tooling
-- Test reporting setup
-
-The project base was generated with Claude Code, allowing me to focus on building tests and applying best practices rather than boilerplate setup.
-
-**Technologies**: JavaScript • WebDriverIO • Mocha • Allure
-
----
-
-## 📝 Note
-
-This is a portfolio/demonstration project created to showcase test automation capabilities. It is not intended as a production framework or reference implementation.
