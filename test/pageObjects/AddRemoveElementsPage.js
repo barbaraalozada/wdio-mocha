@@ -6,10 +6,11 @@ class AddRemoveElementsPage extends BasePage {
   constructor () {
     super(new Label(PreciseTextLocator('Add/Remove Elements'), 'Add/Remove Elements Label'), 'Add/Remove Elements Page');
     this.addElementButton = new Button('//button[@onclick="addElement()"]', 'Add Element Button');
-    this.deleteButton = new Button('//button[@onclick="deleteElement()"]', 'Delete Button');
+    this.deleteButton = (index = 1) => new Button(`//button[@onclick="deleteElement()"][${index}]`, `Delete Button #${index}`);
+    this.allDeleteButtons = new Button('//button[@onclick="deleteElement()"]', 'All Delete Buttons');
   }
   async getDeleteButtonQuantity () {
-    const buttons = await this.deleteButton.elements;
+    const buttons = await this.allDeleteButtons.elements;
     return buttons.length;
   }
 
@@ -17,19 +18,39 @@ class AddRemoveElementsPage extends BasePage {
     return this.addElementButton.state().waitForDisplayed();
   }
 
-  async clickAddElementButton () {
-    await this.addElementButton.click();
-  }
-  async isDeleteButtonDisplayed () {
-    return this.deleteButton.state().waitForDisplayed();
-  }
-  async clickDeleteButton () {
-    await this.deleteButton.click();
+  async clickAddElementButton (times = 1) {
+    for (let i = 0; i < times; i++) {
+      await this.addElementButton.click();
+    }
   }
 
-  async isDeleteButtonNotDisplayed () {
-    return this.deleteButton.state().waitForDisplayed({ reverse: true });
+  async isDeleteButtonDisplayed (index) {
+    return this.deleteButton(index).state().waitForDisplayed();
   }
 
+  async clickDeleteButton (index) {
+    if (await this.deleteButton(index).state().isExisting()) {
+      await this.deleteButton(index).click();
+    }
+  }
+
+  async clickAllDeleteButtons () {
+    const buttons = await this.allDeleteButtons.elements;
+    for (let i = buttons.length; i >= 1; i--) {
+      await this.deleteButton(i).click();
+    }
+  }
+
+  async areNoDeleteButtonsDisplayed () {
+    return (await this.allDeleteButtons.elements).length === 0;
+  };
+
+  async getAddElementButtonText () {
+    return this.addElementButton.getText();
+  }
+
+  async getDeleteButtonText (index) {
+    return this.deleteButton(index).getText();
+  }
 }
 export default new AddRemoveElementsPage();

@@ -54,6 +54,17 @@ export default [
     }
   },
   {
+    files: ['test/**/*.js'],
+    rules: {
+      'no-unused-vars': ['error', {
+        'vars': 'all',
+        'args': 'after-used',
+        'ignoreRestSiblings': false,
+        'caughtErrors': 'all'
+      }]
+    }
+  },
+  {
     ignores: [
       'node_modules/**',
       'dist/**',
