@@ -31,16 +31,16 @@ wdio-mocha/
 │   ├── browser/                  # Browser management and configuration
 │   ├── config/                   # Environment and settings
 │   ├── elements/                 # Reusable UI element classes (Element Object Model)
-│   ├── page/                     # Base page with common methods
-│   └── helpers/                  # Utility functions and helpers
+│   ├── helpers/                  # Utility functions and helpers
+│   └── page/                     # Base page with common methods
 │
 ├── test/                         # Test suite
-│   ├── specs/                    # Test specification files
+│   ├── data/                     # Test data management
 │   ├── pageObjects/              # Page-specific implementations
-│   └── data/                     # Test data management
+│   └── specs/                    # Test specification files
 │
-├── allure-results/               # Raw test execution data
-├── allure-report/                # Generated HTML reports
+├── allure-results/               # Raw test execution data (created automatically)
+├── allure-report/                # Generated HTML reports (created after running "npm run allure:report")
 │
 ├── .env                          # Environment variables (gitignored)
 ├── .env.example                  # Environment template
@@ -100,8 +100,16 @@ npm run all
 # Run all tests (headless mode)
 npm run all:headless
 
+# Run all tests (debug mode, do not generate the report)
+npm run all:debug
+
 # Run specific test suite
 npm run add:remove:elements
+npm run login
+
+#Run specific test suite (debug mode)
+npm run add:remove:elements:debug
+npm run login:debug
 ```
 
 ### Code Quality
