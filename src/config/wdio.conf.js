@@ -6,6 +6,9 @@ import fs from 'fs-extra';
 
 dotenv.config();
 
+// Check if running in debug mode
+const isDebugMode = process.env.DEBUG === 'true';
+
 export const downloadDir = path.resolve('./tmp');
 
 export const config = {
@@ -18,7 +21,7 @@ export const config = {
   // Specify Test Files
   // ==================
   specs: [
-    './test/specs/**/*.js'
+    '../../test/specs/**/*.js'
   ],
 
   // Patterns to exclude
@@ -32,12 +35,13 @@ export const config = {
     browserName: 'chrome',
     'goog:chromeOptions': {
       args: [
-        '--disable-gpu',
-        '--no-sandbox',
-        '--disable-dev-shm-usage',
+        '--guest',
+        '--disable-infobars',
+        '--disable-notifications',
+        '--disable-extensions'
         // Uncomment to run headless
         // '--headless'
-      ]
+      ],
     },
     acceptInsecureCerts: true
   }],
@@ -58,14 +62,16 @@ export const config = {
   framework: 'mocha',
 
   // Test reporter for stdout
-  reporters: [
-    'spec',
-    ['allure', {
-      outputDir: 'allure-results',
-      disableWebdriverStepsReporting: true,
-      disableWebdriverScreenshotsReporting: true,
-    }]
-  ],
+  reporters: isDebugMode
+    ? ['spec'] :
+    [
+      'spec',
+      ['allure', {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: true,
+      }]
+    ],
 
   // Options to be passed to Mocha
   mochaOpts: {
@@ -94,9 +100,10 @@ export const config = {
   /**
    * Hook that gets executed after each test.
    * Takes a screenshot when a test fails and attaches it to the Allure report.
+   * Skips screenshot in debug mode.
    */
   afterTest: async function (test, context, { passed }) {
-    if (!passed) {
+    if (!passed && !isDebugMode) {
       const screenshot = await browser.takeScreenshot();
       allure.addAttachment('Screenshot on failure', Buffer.from(screenshot, 'base64'), 'image/png');
     }

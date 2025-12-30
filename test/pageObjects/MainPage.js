@@ -4,7 +4,7 @@ import BasePage from '../../src/page/BasePage.js';
 
 class MainPage extends BasePage {
   constructor () {
-    super(new Label(PreciseTextLocator('Welcome to the-internet'), 'The Internet Label'), 'The Internet Page');
+    super(new Label(PreciseTextLocator('Welcome to the-internet'), 'The Internet Label'), 'Unique element for The Internet Page');
     this.link = (linkName) => new Label(PreciseTextLocator(linkName), `${linkName} Link`);
   }
   async clickLink (linkName) {

@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "all": "wdio run src/config/wdio.conf.js",
+    "all:debug": "DEBUG=true wdio run src/config/wdio.conf.js",
     "all:headless": "wdio run src/config/wdio.conf.js --headless",
     "add:remove:elements": "wdio run src/config/wdio.conf.js --spec 'test/specs/addRemoveElementsTest.js'",
+    "add:remove:elements:debug": "DEBUG=true wdio run src/config/wdio.conf.js --spec 'test/specs/addRemoveElementsTest.js'",
+    "login": "wdio run src/config/wdio.conf.js --spec 'test/specs/loginTest.js'",
+    "login:debug": "DEBUG=true wdio run src/config/wdio.conf.js --spec 'test/specs/loginTest.js'",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "allure:report": "npm run allure:generate && npm run allure:open",
