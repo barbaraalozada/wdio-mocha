@@ -9,6 +9,9 @@ dotenv.config();
 // Check if running in debug mode
 const isDebugMode = process.env.DEBUG === 'true';
 
+// Check if running in headless mode
+const isHeadless = process.argv.includes('--headless');
+
 export const downloadDir = path.resolve('./tmp');
 
 export const config = {
@@ -38,9 +41,8 @@ export const config = {
         '--guest',
         '--disable-infobars',
         '--disable-notifications',
-        '--disable-extensions'
-        // Uncomment to run headless
-        // '--headless'
+        '--disable-extensions',
+        ...(isHeadless ? ['--headless', '--disable-gpu'] : [])
       ],
     },
     acceptInsecureCerts: true
@@ -98,6 +100,13 @@ export const config = {
   },
 
   /**
+   * Hook that gets executed before each test starts
+   */
+  beforeTest: async function () {
+    await browser.maximizeWindow();
+  },
+
+  /**
    * Hook that gets executed after each test.
    * Takes a screenshot when a test fails and attaches it to the Allure report.
    * Skips screenshot in debug mode.
@@ -107,5 +116,6 @@ export const config = {
       const screenshot = await browser.takeScreenshot();
       allure.addAttachment('Screenshot on failure', Buffer.from(screenshot, 'base64'), 'image/png');
     }
+    await browser.reloadSession();
   },
 };

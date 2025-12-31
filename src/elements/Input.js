@@ -11,7 +11,7 @@ class Input extends BaseElement {
      * @param {string} selector - Input selector
      * @param {string} name - Input name for logging
      */
-  constructor(selector, name = '') {
+  constructor (selector, name = '') {
     super(selector, name || 'Input');
   }
 
@@ -20,8 +20,19 @@ class Input extends BaseElement {
      * @param {string} value - Value to set
      * @returns {Promise<void>}
      */
-  async setValue(value) {
+  async setValue (value) {
     Logger.info(`Setting value "${value}" in input "${this.name}"`);
+    await this.state().waitForDisplayed({ timeout: 5000 });
+    await this.element.setValue(value);
+  }
+
+  /**
+   * Set secret value in input field (for sensitive data like passwords)
+   * @param {string} value - Secret value to set
+   * @returns {Promise<void>}
+   */
+  async setSecretValue (value) {
+    Logger.info(`Setting secret value in input "${this.name}"`);
     await this.state().waitForDisplayed({ timeout: 5000 });
     await this.element.setValue(value);
   }
@@ -31,7 +42,7 @@ class Input extends BaseElement {
      * @param {string} value - Value to add
      * @returns {Promise<void>}
      */
-  async addValue(value) {
+  async addValue (value) {
     Logger.info(`Adding value "${value}" to input "${this.name}"`);
     await this.state().waitForDisplayed({ timeout: 5000 });
     await this.element.addValue(value);
@@ -41,7 +52,7 @@ class Input extends BaseElement {
      * Clear input field
      * @returns {Promise<void>}
      */
-  async clear() {
+  async clear () {
     Logger.info(`Clearing input "${this.name}"`);
     await this.state().waitForDisplayed({ timeout: 5000 });
     await this.element.clearValue();
@@ -51,7 +62,7 @@ class Input extends BaseElement {
      * Get current value of input
      * @returns {Promise<string>}
      */
-  async getValue() {
+  async getValue () {
     Logger.debug(`Getting value from input "${this.name}"`);
     return await this.element.getValue();
   }
@@ -62,7 +73,7 @@ class Input extends BaseElement {
      * @param {number} delay - Delay between keystrokes in ms
      * @returns {Promise<void>}
      */
-  async type(value, delay = 100) {
+  async type (value, delay = 100) {
     Logger.info(`Typing value in input "${this.name}"`);
     await this.clear();
     for (const char of value) {
@@ -75,7 +86,7 @@ class Input extends BaseElement {
      * Check if input is read-only
      * @returns {Promise<boolean>}
      */
-  async isReadOnly() {
+  async isReadOnly () {
     const readonly = await this.getAttribute('readonly');
     return readonly !== null;
   }
@@ -84,7 +95,7 @@ class Input extends BaseElement {
      * Get placeholder text
      * @returns {Promise<string>}
      */
-  async getPlaceholder() {
+  async getPlaceholder () {
     return await this.getAttribute('placeholder');
   }
 }

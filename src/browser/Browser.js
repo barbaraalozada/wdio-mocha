@@ -285,6 +285,16 @@ class Browser {
     });
     return true;
   }
+
+  /**
+     * Send a sequence of key strokes to the active element
+     * @param {string|string[]} keys - Key(s) to send (e.g., 'Enter', 'Tab', ['Control', 'a'])
+     * @returns {Promise<void>}
+     */
+  static async keys (keys) {
+    Logger.debug(`Sending key(s): ${Array.isArray(keys) ? keys.join('+') : keys}`);
+    await browser.keys(keys);
+  }
 }
 
 export default Browser;
