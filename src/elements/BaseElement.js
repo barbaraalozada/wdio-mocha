@@ -9,7 +9,7 @@ class BaseElement {
      * @param {string} selector - Element selector
      * @param {string} name - Element name for logging
      */
-  constructor(selector, name = '') {
+  constructor (selector, name = '') {
     this.selector = selector;
     this.name = name || selector;
   }
@@ -18,7 +18,7 @@ class BaseElement {
      * Get the element
      * @returns {WebdriverIO.Element}
      */
-  get element() {
+  get element () {
     return $(this.selector);
   }
 
@@ -26,7 +26,7 @@ class BaseElement {
      * Get all elements matching the selector
      * @returns {Promise<WebdriverIO.ElementArray>}
      */
-  get elements() {
+  get elements () {
     return $$(this.selector);
   }
 
@@ -34,7 +34,7 @@ class BaseElement {
      * Get element state utilities
      * @returns {object} State utilities
      */
-  state() {
+  state () {
     return {
       /**
              * Wait for element to be displayed
@@ -107,10 +107,26 @@ class BaseElement {
      * Get text content of element
      * @returns {Promise<string>}
      */
-  async getText() {
+  async getText () {
     Logger.debug(`Getting text from element "${this.name}"`);
     await this.state().waitForDisplayed();
     return await this.element.getText();
+  }
+
+  /**
+     * Get text content of the next sibling text node
+     * @returns {Promise<string>}
+     */
+  async getNextSiblingText () {
+    Logger.debug(`Getting next sibling text from element "${this.name}"`);
+    const text = await browser.execute((selector) => {
+      const element = document.evaluate(selector, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue
+        || document.querySelector(selector);
+      if (!element) return '';
+      const nextNode = element.nextSibling;
+      return nextNode ? nextNode.textContent.trim() : '';
+    }, this.selector);
+    return text;
   }
 
   /**
@@ -118,7 +134,7 @@ class BaseElement {
      * @param {string} attributeName - Attribute name
      * @returns {Promise<string>}
      */
-  async getAttribute(attributeName) {
+  async getAttribute (attributeName) {
     Logger.debug(`Getting attribute "${attributeName}" from element "${this.name}"`);
     return await this.element.getAttribute(attributeName);
   }
@@ -127,7 +143,7 @@ class BaseElement {
      * Scroll element into view
      * @returns {Promise<void>}
      */
-  async scrollIntoView() {
+  async scrollIntoView () {
     Logger.debug(`Scrolling element "${this.name}" into view`);
     await this.element.scrollIntoView();
   }
@@ -136,7 +152,7 @@ class BaseElement {
      * Move mouse to element
      * @returns {Promise<void>}
      */
-  async moveTo() {
+  async moveTo () {
     Logger.debug(`Moving to element "${this.name}"`);
     await this.element.moveTo();
   }
@@ -146,7 +162,7 @@ class BaseElement {
      * @param {string} propertyName - CSS property name
      * @returns {Promise<string>}
      */
-  async getCSSProperty(propertyName) {
+  async getCSSProperty (propertyName) {
     const property = await this.element.getCSSProperty(propertyName);
     return property.value;
   }

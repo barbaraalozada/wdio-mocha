@@ -59,10 +59,12 @@ describe('Add/Remove Elements', () => {
   });
 
   it('should display correct button texts', async () => {
+    const actualAddButtonText = await AddRemoveElementsPage.getAddElementButtonText();
+    const expectedAddButtonText = addRemoveElementsData.addElementButtonText;
     await AddRemoveElementsPage.clickAddElementButton();
-    const addButtonText = await AddRemoveElementsPage.getAddElementButtonText();
-    const deleteButtonText = await AddRemoveElementsPage.getDeleteButtonText();
-    assert.equal(addButtonText, addRemoveElementsData.addElementButtonText, `Expected Add Element button text to be "${addRemoveElementsData.addElementButtonText}", but got "${addButtonText}"`);
-    assert.equal(deleteButtonText, addRemoveElementsData.deleteButtonText, `Expected Delete button text to be "${addRemoveElementsData.deleteButtonText}", but got "${deleteButtonText}"`);
+    const actualDeleteButtonText = await AddRemoveElementsPage.getDeleteButtonText();
+    const expectedDeleteButtonText = addRemoveElementsData.deleteButtonText;
+    assert.equal(actualAddButtonText, expectedAddButtonText, `Expected Add Element button text to be "${actualAddButtonText}", but got "${expectedAddButtonText}"`);
+    assert.equal(actualDeleteButtonText, expectedDeleteButtonText, `Expected Delete button text to be "${actualDeleteButtonText}", but got "${expectedDeleteButtonText}"`);
   });
 });
