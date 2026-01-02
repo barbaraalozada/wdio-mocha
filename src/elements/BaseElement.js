@@ -115,18 +115,24 @@ class BaseElement {
 
   /**
      * Get text content of the next sibling text node
+     * Useful for elements like checkboxes where the label is a text node
      * @returns {Promise<string>}
      */
   async getNextSiblingText () {
     Logger.debug(`Getting next sibling text from element "${this.name}"`);
-    const text = await browser.execute((selector) => {
-      const element = document.evaluate(selector, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue
-        || document.querySelector(selector);
-      if (!element) return '';
-      const nextNode = element.nextSibling;
-      return nextNode ? nextNode.textContent.trim() : '';
-    }, this.selector);
-    return text;
+    try {
+      const text = await browser.execute((selector) => {
+        const element = document.evaluate(selector, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue
+          || document.querySelector(selector);
+        if (!element) return '';
+        const nextNode = element.nextSibling;
+        return nextNode ? nextNode.textContent.trim() : '';
+      }, this.selector);
+      return text;
+    } catch (error) {
+      Logger.error(`Failed to get next sibling text for "${this.name}": ${error.message}`);
+      return '';
+    }
   }
 
   /**

@@ -5,7 +5,6 @@
  */
 
 const loginData = {
-  // Invalid user credentials for negative testing
   invalidUsers: [
     {
       username: 'invaliduser',
@@ -25,7 +24,6 @@ const loginData = {
     }
   ],
 
-  // Expected messages
   messages: {
     loginSuccess: 'You logged into a secure area!',
     loginFailed: 'Your username is invalid!',
@@ -34,7 +32,6 @@ const loginData = {
     secureAreaAccessDenied: 'You must login to view the secure area!'
   },
 
-  //Expected elements texts
   texts: {
     usernameInputText: 'Username',
     passwordInputText: 'Password',

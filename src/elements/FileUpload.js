@@ -13,7 +13,7 @@ class FileUpload extends BaseElement {
      * @param {string} selector - File input selector
      * @param {string} name - File input name for logging
      */
-  constructor(selector, name = '') {
+  constructor (selector, name = '') {
     super(selector, name || 'FileUpload');
   }
 
@@ -22,17 +22,22 @@ class FileUpload extends BaseElement {
      * @param {string} filePath - Absolute or relative path to file
      * @returns {Promise<void>}
      */
-  async uploadFile(filePath) {
+  async uploadFile (filePath) {
     Logger.info(`Uploading file "${filePath}" to "${this.name}"`);
     await this.state().waitForExist({ timeout: 5000 });
 
-    // Convert to absolute path if relative
-    const absolutePath = path.isAbsolute(filePath)
-      ? filePath
-      : path.resolve(process.cwd(), filePath);
+    try {
+      // Convert to absolute path if relative
+      const absolutePath = path.isAbsolute(filePath)
+        ? filePath
+        : path.resolve(process.cwd(), filePath);
 
-    const remoteFilePath = await browser.uploadFile(absolutePath);
-    await this.element.setValue(remoteFilePath);
+      const remoteFilePath = await browser.uploadFile(absolutePath);
+      await this.element.setValue(remoteFilePath);
+    } catch (error) {
+      Logger.error(`Failed to upload file "${filePath}" to "${this.name}": ${error.message}`);
+      throw error;
+    }
   }
 
   /**
@@ -40,17 +45,22 @@ class FileUpload extends BaseElement {
      * @param {string[]} filePaths - Array of file paths
      * @returns {Promise<void>}
      */
-  async uploadMultipleFiles(filePaths) {
+  async uploadMultipleFiles (filePaths) {
     Logger.info(`Uploading ${filePaths.length} files to "${this.name}"`);
     await this.state().waitForExist({ timeout: 5000 });
 
-    const absolutePaths = filePaths.map(filePath =>
-      path.isAbsolute(filePath) ? filePath : path.resolve(process.cwd(), filePath)
-    );
+    try {
+      const absolutePaths = filePaths.map(filePath =>
+        path.isAbsolute(filePath) ? filePath : path.resolve(process.cwd(), filePath)
+      );
 
-    for (const absolutePath of absolutePaths) {
-      const remoteFilePath = await browser.uploadFile(absolutePath);
-      await this.element.addValue(remoteFilePath);
+      for (const absolutePath of absolutePaths) {
+        const remoteFilePath = await browser.uploadFile(absolutePath);
+        await this.element.addValue(remoteFilePath);
+      }
+    } catch (error) {
+      Logger.error(`Failed to upload multiple files to "${this.name}": ${error.message}`);
+      throw error;
     }
   }
 
@@ -58,7 +68,7 @@ class FileUpload extends BaseElement {
      * Get uploaded file name
      * @returns {Promise<string>}
      */
-  async getFileName() {
+  async getFileName () {
     const value = await this.element.getValue();
     return path.basename(value);
   }
@@ -67,7 +77,7 @@ class FileUpload extends BaseElement {
      * Check if file is uploaded
      * @returns {Promise<boolean>}
      */
-  async hasFile() {
+  async hasFile () {
     const value = await this.element.getValue();
     return value !== '';
   }
@@ -76,7 +86,7 @@ class FileUpload extends BaseElement {
      * Get accept attribute (allowed file types)
      * @returns {Promise<string>}
      */
-  async getAllowedFileTypes() {
+  async getAllowedFileTypes () {
     return await this.getAttribute('accept');
   }
 
@@ -84,7 +94,7 @@ class FileUpload extends BaseElement {
      * Check if multiple files are allowed
      * @returns {Promise<boolean>}
      */
-  async allowsMultiple() {
+  async allowsMultiple () {
     const multiple = await this.getAttribute('multiple');
     return multiple !== null;
   }

@@ -3,7 +3,6 @@
  * Store test data here
  */
 const addRemoveElementsData = {
-  //Expected buttons texts
   deleteButtonText: 'Delete',
   addElementButtonText: 'Add Element'
 };
