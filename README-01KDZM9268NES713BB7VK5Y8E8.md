@@ -2,7 +2,7 @@
 
 A test automation portfolio project demonstrating QA engineering practices with WebDriverIO, Mocha, and Allure reporting.
 
-> Project base created with [Claude Code](https://claude.com/claude-code). Tests and implementation built by me.
+> Project base created with [Claude Code](ht**************************de). Tests and implementation built by me.
 
 ---
 
@@ -27,9 +27,6 @@ The project base was generated with Claude Code to handle initial boilerplate, a
 
 ```ini
 wdio-mocha/
-├── docs/                         # Documentation
-│   └── test-suites/              # Detailed test suite documentation
-│
 ├── src/                          # Source code (reusable components)
 │   ├── browser/                  # Browser management and configuration
 │   ├── config/                   # Environment and settings
@@ -104,15 +101,9 @@ Comprehensive test suite documentation is available for each feature:
 | [Login](docs/test-suites/login-test-suite.md) | ✅ Automated | 18 | 94.4% |
 | [Checkboxes](docs/test-suites/checkboxes-test-suite.md) | ✅ Automated | 14 | 100% |
 | [Add/Remove Elements](docs/test-suites/add-remove-elements-test-suite.md) | ✅ Automated | 18 | 100% |
-| Dropdown | ⏳ Pending | To define | 0% |
-| Dynamic Controls | ⏳ Pending | To define | 0% |
-| File Upload | ⏳ Pending | To define | 0% |
-| Drag and Drop | ⏳ Pending | To define | 0% |
-| Hovers | ⏳ Pending | To define | 0% |
-| Sortable Data Tables | ⏳ Pending | To define | 0% |
-| File Download | ⏳ Pending | To define | 0% |
+| [Dropdown](docs/test-suites/dropdown-test-suite.md) | ⏳ Pending | 19 | 0% |
 
-**Total Test Cases**: 50 (automated) | **Pending**: 7 test suites
+**Total Test Cases**: 69 | **Automated**: 50 (72.5%)
 
 Each test suite document includes:
 
@@ -282,7 +273,7 @@ Allure reports provide comprehensive insights:
 
 ## 🔗 Additional Resources
 
-- [WebDriverIO Documentation](https://webdriver.io/)
-- [Mocha Testing Framework](https://mochajs.org/)
-- [Chai Assertion Library](https://www.chaijs.com/)
-- [Allure Report Documentation](https://docs.qameta.io/allure/)
+- [WebDriverIO Documentation](ht****************io/)
+- [Mocha Testing Framework](ht***************rg/)
+- [Chai Assertion Library](ht******************om/)
+- [Allure Report Documentation](ht*************************re/)

@@ -3,6 +3,7 @@
  * Store test data here
  */
 const addRemoveElementsData = {
+  pageTitle: 'Add/Remove Elements',
   deleteButtonText: 'Delete',
   addElementButtonText: 'Add Element'
 };

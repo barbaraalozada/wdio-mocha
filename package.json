@@ -11,6 +11,7 @@
     "add:remove:elements:debug": "DEBUG=true wdio run src/config/wdio.conf.js --spec 'test/specs/addRemoveElementsTest.js'",
     "login": "wdio run src/config/wdio.conf.js --spec 'test/specs/loginTest.js'",
     "login:debug": "DEBUG=true wdio run src/config/wdio.conf.js --spec 'test/specs/loginTest.js'",
+    "checkboxes": "wdio run src/config/wdio.conf.js --spec 'test/specs/checkboxesTest.js'",
     "checkboxes:debug": "DEBUG=true wdio run src/config/wdio.conf.js --spec 'test/specs/checkboxesTest.js'",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

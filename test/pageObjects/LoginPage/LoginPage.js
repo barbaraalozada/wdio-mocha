@@ -1,4 +1,5 @@
 import { Button, Input, Label } from '../../../src/elements/index.js';
+import EnvConfig from '../../../src/helpers/EnvConfig.js';
 import { PreciseTextLocator } from '../../../src/helpers/Locator.js';
 import BasePage from '../../../src/page/BasePage.js';
 
@@ -48,6 +49,7 @@ class LoginPage extends BasePage {
   async clickFlashMessageCloseButton () {
     if (await this.flashMessageCloseButton.state().isExisting()) {
       await this.flashMessageCloseButton.click();
+      await this.flashMessage.state().waitForDisplayed({ reverse: true, timeout: EnvConfig.getDefaultTimeout() });
     }
   }
 

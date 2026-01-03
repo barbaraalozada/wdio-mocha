@@ -35,6 +35,10 @@ class CheckboxesPage extends BasePage {
     return this.checkboxes(index).getNextSiblingText();
   }
 
+  async getCheckboxElement (index) {
+    return this.checkboxes(index).element;
+  }
+
 }
 
 export default new CheckboxesPage();

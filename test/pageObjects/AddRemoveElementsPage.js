@@ -18,6 +18,10 @@ class AddRemoveElementsPage extends BasePage {
     return this.addElementButton.state().waitForDisplayed();
   }
 
+  async isAddButtonEnabled () {
+    return this.addElementButton.state().isEnabled();
+  }
+
   async clickAddElementButton (times = 1) {
     for (let i = 0; i < times; i++) {
       await this.addElementButton.click();
@@ -51,6 +55,14 @@ class AddRemoveElementsPage extends BasePage {
 
   async getDeleteButtonText (index) {
     return this.deleteButton(index).getText();
+  }
+
+  async isDeleteButtonEnabled (index = 1) {
+    return this.deleteButton(index).state().isEnabled();
+  }
+
+  async doubleClickAddButton () {
+    await this.addElementButton.doubleClick();
   }
 }
 export default new AddRemoveElementsPage();
