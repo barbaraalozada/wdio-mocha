@@ -12,6 +12,9 @@ const isDebugMode = process.env.DEBUG === 'true';
 // Check if running in headless mode
 const isHeadless = process.argv.includes('--headless');
 
+// Check if running in CI environment
+const isCI = process.env.CI === 'true';
+
 export const downloadDir = path.resolve('./tmp');
 
 export const config = {
@@ -42,7 +45,13 @@ export const config = {
         '--disable-infobars',
         '--disable-notifications',
         '--disable-extensions',
-        ...(isHeadless ? ['--headless', '--disable-gpu'] : [])
+        ...(isHeadless ? ['--headless', '--disable-gpu'] : []),
+        ...(isCI ? [
+          '--no-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-software-rasterizer',
+          '--disable-setuid-sandbox'
+        ] : [])
       ],
     },
     acceptInsecureCerts: true
