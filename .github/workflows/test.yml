@@ -1,5 +1,8 @@
 name: WebDriverIO Tests
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
     inputs:
@@ -46,7 +49,7 @@ jobs:
           DEFAULT_TIMEOUT: ${{ secrets.DEFAULT_TIMEOUT }}
         run: |
           set -e
-          
+
           echo "Running suite: ${{ inputs.test_suite }}"
           echo "Headless mode: ${{ inputs.headless }}"
 
@@ -75,3 +78,10 @@ jobs:
           name: allure-report
           path: allure-report/
           retention-days: 7
+
+      - name: Deploy Allure report to GitHub Pages
+        if: always() && hashFiles('allure-report/**') != ''
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: allure-report
