@@ -168,6 +168,10 @@ npm run lint:fix
 npm run allure:report
 ```
 
+**[View Latest Test Report →](https://barbaraalozada.github.io/wdio-mocha/)**
+
+Allure reports provide comprehensive test insights including pass/fail rates, timelines, failure screenshots, and test history. Reports are automatically deployed to GitHub Pages after each test run via GitHub Actions.
+
 ---
 
 ## 🛠️ Tech Stack
@@ -202,81 +206,33 @@ npm run allure:report
 
 ---
 
-## 📚 Project Features
+## 📖 Key Features & Best Practices
 
-### Automation Capabilities
+**Architecture & Design Patterns**
+- Page Object Model (POM) and Element Object Model (EOM) for maintainability
+- Separation of concerns: source code in `src/`, tests in `test/`
+- Consistent naming conventions (UpperCamelCase for classes, lowerCamelCase for tests)
 
-- ✅ Cross-browser support (Chrome configured)
-- ✅ Headless and headed execution modes
-- ✅ Configurable timeouts and retry logic
-- ✅ Automatic screenshot capture on failures
-- ✅ Environment-based configuration
-- ✅ Secure credential management
+**Test Implementation**
+- Test independence and isolation
+- Atomic tests (one behavior per test)
+- Smart explicit waits over hard-coded delays
+- Automatic screenshot capture on failures
+- Meaningful assertions with Chai
 
-### Code Quality
+**Configuration & Security**
+- Environment-based configuration with `.env`
+- Secure credential management (gitignored secrets)
+- Centralized config access via helpers
+- Configurable timeouts and retry logic
 
-- ✅ ESLint integration for code consistency
-- ✅ POM architecture for maintainability
-- ✅ Descriptive naming conventions
-- ✅ DRY and KISS principles
-
-### Reporting
-
-- ✅ Detailed Allure reports with:
-   - Test execution history
-   - Visual screenshots on failure
-   - Test categorization
-   - Trend analysis
-   - Suite/test timing metrics
-
----
-
-## 📖 Best Practices Implemented
-
-### Code Organization
-
-1. **Separation of Concerns**: Source code in `src/`, tests in `test/`
-2. **Naming Conventions**:
-   - **Classes**: UpperCamelCase (e.g., `BasePage.js`, `LoginPage.js`)
-   - **Tests**: lowerCamelCase (e.g., `loginTest.js`)
-   - **Variables/Methods**: Descriptive, intention-revealing names
-
-### Testing Principles
-
-3. **Test Independence**: Each test runs in isolation
-4. **Atomic Tests**: One test validates one behavior
-5. **Meaningful Assertions**: Clear, specific validations using Chai
-6. **Data Management**: Test data separated in `test/data/`
-
-### Security & Configuration
-
-7. **Environment Variables**: Sensitive data in `.env` (never committed)
-8. **Config Helper**: Centralized access via `EnvConfig`
-
-### Automation Best Practices
-
-9. **Smart Waits**: Explicit waits over hard-coded delays
-10. **Error Handling**: Screenshots automatically captured on failures
-11. **Reusability**: Helper functions and element classes for common operations
-12. **Logging**: Consistent logging via Logger helper
-13. **Flexible Locators**: Strategy pattern for element location
-
-### Modern JavaScript
-
-14. **ES Modules**: Import/export syntax with `.js` extensions
-15. **Async/Await**: Clean asynchronous code handling
-
----
-
-## 📈 Sample Test Report
-
-Allure reports provide comprehensive insights:
-
-- **Overview Dashboard**: Pass/fail rates, test duration, history graphs
-- **Suites View**: Organized by test suites and categories
-- **Timeline**: Visual representation of test execution
-- **Behaviors**: Tests grouped by features and stories
-- **Packages**: Tests organized by package structure
+**Code Quality & Automation**
+- ESLint integration for consistency
+- Reusable helper functions and element classes
+- Modern JavaScript (ES Modules, async/await)
+- Cross-browser support (Chrome configured)
+- Headless and headed execution modes
+- CI/CD with GitHub Actions
 
 ---
 
