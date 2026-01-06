@@ -33,13 +33,13 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: stable
-
       - name: Install dependencies
         run: npm ci
+
+      - name: Verify Chrome installation
+        run: |
+          google-chrome --version
+          which google-chrome
 
       - name: Setup Xvfb for non-headless mode
         if: ${{ inputs.headless == false }}
@@ -69,7 +69,7 @@ jobs:
           fi
 
       - name: Upload Allure results
-        if: always()
+        if: always() && hashFiles('allure-results/**') != ''
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
@@ -77,11 +77,11 @@ jobs:
           retention-days: 7
 
       - name: Generate Allure report
-        if: always()
+        if: always() && hashFiles('allure-results/**') != ''
         run: npm run allure:generate
 
       - name: Upload Allure report
-        if: always()
+        if: always() && hashFiles('allure-report/**') != ''
         uses: actions/upload-artifact@v4
         with:
           name: allure-report

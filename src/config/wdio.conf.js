@@ -1,8 +1,8 @@
+import fs from 'fs';
 import path from 'path';
 
 import allure from '@wdio/allure-reporter';
 import dotenv from 'dotenv';
-import fs from 'fs-extra';
 
 dotenv.config();
 
@@ -30,7 +30,6 @@ export const config = {
     '../../test/specs/**/*.js'
   ],
 
-  // Patterns to exclude
   exclude: [],
 
   // ============
@@ -39,13 +38,15 @@ export const config = {
   maxInstances: 1,
   capabilities: [{
     browserName: 'chrome',
+    browserVersion: 'stable',
     'goog:chromeOptions': {
       args: [
         '--guest',
         '--disable-infobars',
         '--disable-notifications',
         '--disable-extensions',
-        ...(isHeadless ? ['--headless', '--disable-gpu'] : []),
+        '--window-size=1920,1080',
+        ...(isHeadless ? ['--headless=new', '--disable-gpu'] : []),
         ...(isCI ? [
           '--no-sandbox',
           '--disable-dev-shm-usage',
@@ -66,13 +67,10 @@ export const config = {
   connectionRetryTimeout: 120000,
   connectionRetryCount: 3,
 
-  // Services
-  services: ['chromedriver'],
+  services: [],
 
-  // Framework
   framework: 'mocha',
 
-  // Test reporter for stdout
   reporters: isDebugMode
     ? ['spec'] :
     [
@@ -84,7 +82,6 @@ export const config = {
       }]
     ],
 
-  // Options to be passed to Mocha
   mochaOpts: {
     ui: 'bdd',
     timeout: 60000,
@@ -98,7 +95,9 @@ export const config = {
    * Gets executed once before all workers get launched.
    */
   onPrepare: function () {
-    fs.ensureDir(downloadDir);
+    if (!fs.existsSync(downloadDir)) {
+      fs.mkdirSync(downloadDir, { recursive: true });
+    }
   },
 
   /**
