@@ -10,7 +10,9 @@ dotenv.config();
 const isDebugMode = process.env.DEBUG === 'true';
 
 // Check if running in headless mode
-const isHeadless = process.argv.includes('--headless');
+const isHeadless =
+  process.env.CI === 'true' ||
+  process.argv.includes('--headless');
 
 // Check if running in CI environment
 const isCI = process.env.CI === 'true';
@@ -46,12 +48,15 @@ export const config = {
         '--disable-notifications',
         '--disable-extensions',
         '--window-size=1920,1080',
-        ...(isHeadless ? ['--headless=new', '--disable-gpu'] : []),
+
+        ...(isHeadless ? [
+          '--headless=new',
+          '--disable-gpu'
+        ] : []),
+
         ...(isCI ? [
           '--no-sandbox',
-          '--disable-dev-shm-usage',
-          '--disable-software-rasterizer',
-          '--disable-setuid-sandbox'
+          '--disable-dev-shm-usage'
         ] : [])
       ],
     },
@@ -104,14 +109,18 @@ export const config = {
    * Gets executed before test execution begins
    */
   before: function () {
-    browser.maximizeWindow();
+    if (!isHeadless) {
+      browser.maximizeWindow();
+    }
   },
 
   /**
    * Hook that gets executed before each test starts
    */
   beforeTest: async function () {
-    await browser.maximizeWindow();
+    if (!isHeadless) {
+      await browser.maximizeWindow();
+    }
   },
 
   /**
