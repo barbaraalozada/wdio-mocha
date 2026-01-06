@@ -109,7 +109,7 @@ export const config = {
    * Gets executed before test execution begins
    */
   before: function () {
-    if (!isHeadless) {
+    if (!isCI && !isHeadless) {
       browser.maximizeWindow();
     }
   },
@@ -118,7 +118,7 @@ export const config = {
    * Hook that gets executed before each test starts
    */
   beforeTest: async function () {
-    if (!isHeadless) {
+    if (!isCI && !isHeadless) {
       await browser.maximizeWindow();
     }
   },
