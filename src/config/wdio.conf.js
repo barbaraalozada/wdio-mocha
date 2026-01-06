@@ -11,7 +11,7 @@ const isDebugMode = process.env.DEBUG === 'true';
 
 // Check if running in headless mode
 const isHeadless =
-  process.env.CI === 'true' ||
+  process.env.HEADLESS === 'true' ||
   process.argv.includes('--headless');
 
 // Check if running in CI environment
