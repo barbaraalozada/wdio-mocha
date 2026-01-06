@@ -112,7 +112,7 @@ describe('Login', () => {
       assert.equal(actualText, expectedText, `Expected text to be "${expectedText}", but found "${actualText}"`);
     });
 
-    it.only('[LG-UI-002] should close the Login flash message when the close button is clicked', async () => {
+    it('[LG-UI-002] should close the Login flash message when the close button is clicked', async () => {
       await LoginPage.clickLoginButton();
       const actualMessage = await LoginPage.getFlashMessage();
       const expectedMessage = expectedMessages.loginFailed;
@@ -121,7 +121,7 @@ describe('Login', () => {
       assert.isFalse(await LoginPage.isFlashMessageDisplayed(), 'Expected no flash message to be displayed, but a flash message was found');
     });
 
-    it.only('[LG-UI-003] should close the Secure Area flash message when the close button is clicked', async () => {
+    it('[LG-UI-003] should close the Secure Area flash message when the close button is clicked', async () => {
       await LoginPage.setUsernameInput(EnvConfig.getLoginUsername());
       await LoginPage.setPasswordInput(EnvConfig.getLoginPassword());
       await LoginPage.clickLoginButton();
