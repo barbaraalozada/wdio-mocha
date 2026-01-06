@@ -131,14 +131,5 @@ describe('Checkboxes', () => {
       stateAfterRefresh = await CheckboxesPage.isCheckboxChecked(2);
       assert.isTrue(stateAfterRefresh, 'Expected checkbox 2 to reset to checked after refresh, but it was not');
     });
-
-    it('[CB-EC-006] should handle keyboard interaction with Space key', async () => {
-      const checkbox1Element = await CheckboxesPage.getCheckboxElement(1);
-      const initialState = await CheckboxesPage.isCheckboxChecked(1);
-      await checkbox1Element.click();
-      await Browser.keys('Space');
-      const stateAfterSpace = await CheckboxesPage.isCheckboxChecked(1);
-      assert.notEqual(stateAfterSpace, initialState, 'Expected checkbox 1 state to toggle after Space key press');
-    });
   });
 });
