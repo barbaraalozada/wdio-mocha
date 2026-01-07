@@ -66,6 +66,13 @@ wdio-mocha/
 - Promotes DRY (Don't Repeat Yourself) principles
 - Simplifies test maintenance
 
+**Data-Driven Testing (DDT)**
+
+- Centralized test data in `test/data/` directory
+- Separation of test logic from test data
+- Dynamic test case generation through data iteration
+- Parameterized page object methods for data flexibility
+
 **BasePage Pattern**
 
 - Common methods shared across all pages
@@ -216,6 +223,7 @@ Allure reports provide comprehensive test insights including pass/fail rates, ti
 **Test Implementation**
 - Test independence and isolation
 - Atomic tests (one behavior per test)
+- Data-Driven Testing (DDT) with centralized test data
 - Smart explicit waits over hard-coded delays
 - Automatic screenshot capture on failures
 - Meaningful assertions with Chai
