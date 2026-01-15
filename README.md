@@ -6,24 +6,32 @@ A test automation portfolio project demonstrating QA engineering practices with 
 
 ---
 
-## 👨‍💻 About This Project
+## 👨‍💻 About the Project
 
-This portfolio project demonstrates my test automation skills using industry-standard tools and practices. Key highlights:
+This portfolio project demonstrates my test automation skills using industry-standard tools and practices. 
 
-- **Test Implementation**: I built all test cases and page objects
-- **Design Patterns**: Applied Page Object Model for maintainability
-- **Modern JavaScript**: Used ES Modules and async/await patterns
-- **Test Reporting**: Configured Allure for comprehensive test reports
+Key highlights:
+- End-to-end test implementation and ownership
+- Clean architecture using POM, EOM, and shared base layers
+- Data-driven testing and reusable components
+- CI-integrated reporting with GitHub Pages
 
 The project base was generated with Claude Code to handle initial boilerplate, allowing me to focus on test development and applying automation best practices.
 
-**Technologies**: JavaScript • WebDriverIO • Mocha • Allure Report
+---
+
+## 🧪 Tech Stack
+
+- **WebdriverIO** – Browser automation
+- **Mocha** – Test framework
+- **JavaScript**
+- **Page Object Model (POM)**
+- **Allure Reports**
+- **GitHub Actions** – CI
 
 ---
 
-## 🏗️ Architecture
-
-### Project Structure
+## 🏗️ Project Structure
 
 ```ini
 wdio-mocha/
@@ -52,33 +60,6 @@ wdio-mocha/
 └── jsconfig.json                 # JavaScript configuration
 ```
 
-### Design Patterns
-
-**Page Object Model (POM)**
-
-- Separates page structure from test logic
-- Improves code reusability and maintainability
-- Centralizes element locators
-
-**Element Object Model (EOM)**
-
-- Abstracts common UI elements (buttons, inputs, etc.)
-- Promotes DRY (Don't Repeat Yourself) principles
-- Simplifies test maintenance
-
-**Data-Driven Testing (DDT)**
-
-- Centralized test data in `test/data/` directory
-- Separation of test logic from test data
-- Dynamic test case generation through data iteration
-- Parameterized page object methods for data flexibility
-
-**BasePage Pattern**
-
-- Common methods shared across all pages
-- Consistent wait strategies and interactions
-- Screenshot capture for debugging
-
 ---
 
 ## 🚀 Getting Started
@@ -92,6 +73,10 @@ wdio-mocha/
 ### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/barbaraalozada/wdio-mocha.git
+cd wdio-mocha
+
 # Install dependencies
 npm install
 
@@ -99,37 +84,6 @@ npm install
 cp .env.example .env
 # Edit .env with your configuration values
 ```
-
----
-
-## 📋 Test Documentation
-
-Comprehensive test suite documentation is available for each feature:
-
-| Test Suite | Status | Test Cases | Automation |
-|------------|--------|------------|------------|
-| [Login](docs/test-suites/login-test-suite.md) | ✅ Automated | 18 | 94.4% |
-| [Checkboxes](docs/test-suites/checkboxes-test-suite.md) | ✅ Automated | 14 | 100% |
-| [Add/Remove Elements](docs/test-suites/add-remove-elements-test-suite.md) | ✅ Automated | 18 | 100% |
-| Dropdown | ⏳ Pending | To define | 0% |
-| Dynamic Controls | ⏳ Pending | To define | 0% |
-| File Upload | ⏳ Pending | To define | 0% |
-| Drag and Drop | ⏳ Pending | To define | 0% |
-| Hovers | ⏳ Pending | To define | 0% |
-| Sortable Data Tables | ⏳ Pending | To define | 0% |
-| File Download | ⏳ Pending | To define | 0% |
-
-**Total Test Cases**: 50 (automated) | **Pending**: 7 test suites
-
-Each test suite document includes:
-
-- Test suite overview with scope and objectives
-- Detailed test cases organized by category
-- Step-by-step execution instructions
-- Expected results and validation criteria
-- Test type classification (Positive/Negative)
-- Automation status tracking
-- Test coverage metrics and statistics
 
 ---
 
@@ -152,101 +106,72 @@ npm run add:remove:elements
 npm run login
 npm run checkboxes
 
-#Run specific test suite (debug mode)
-npm run add:remove:elements:debug
-npm run login:debug
-npm run checkboxes:debug
-```
-
-### Code Quality
-
-```bash
-# Lint code
-npm run lint
-
-# Auto-fix linting issues
-npm run lint:fix
-```
-
-### Test Reports
-
-```bash
 # Generate and open Allure report
 npm run allure:report
 ```
+---
 
-**[View Latest Test Report →](https://barbaraalozada.github.io/wdio-mocha/)**
+## 🧭 Testing Strategy
 
-Allure reports provide comprehensive test insights including pass/fail rates, timelines, failure screenshots, and test history. Reports are automatically deployed to GitHub Pages after each test run via GitHub Actions.
+This project follows a risk-based testing approach:
+- Priority is given to critical and high-impact user flows
+- Automated tests focus on stable and repeatable scenarios
+- Tests are isolated and independent
+- Coverage is expanded incrementally based on risk and value
+
+> The number of scenarios is intentionally limited to demonstrate framework design, structure, and execution strategy.
+> The framework is designed to scale with additional regression and edge-case coverage.
 
 ---
 
-## 🛠️ Tech Stack
+## 🔐 Security Awareness
 
-### Core Stack
-
-| Tool | Purpose |
-|------|---------|
-| **WebDriverIO v9** | Browser automation and test execution |
-| **Mocha** | Test framework with BDD syntax |
-| **Chai v6** | Assertion library for test validation |
-
-### Development Tools
-
-| Tool | Purpose |
-|------|---------|
-| **ESLint v9** | Code quality and consistency enforcement |
-| **dotenv** | Environment variable management |
-| **ES Modules** | Modern JavaScript module system |
-
-### Reporting
-
-| Tool | Purpose |
-|------|---------|
-| **Allure Report** | Rich test reports with history, screenshots, and trends |
-
-### Browser Support
-
-| Browser | Driver |
-|---------|--------|
-| **Chrome** | ChromeDriver (auto-managed) |
+- Credentials and environment-specific data are managed via environment variables
+- Sensitive information is not hardcoded or logged
+- Authentication flows are validated at a functional level only
+- In a production environment, security testing would be handled through dedicated reviews and tooling.
 
 ---
 
-## 📖 Key Features & Best Practices
+## 🔄 CI/CD & Quality Gates
 
-**Architecture & Design Patterns**
-- Page Object Model (POM) and Element Object Model (EOM) for maintainability
-- Separation of concerns: source code in `src/`, tests in `test/`
-- Consistent naming conventions (UpperCamelCase for classes, lowerCamelCase for tests)
+Automated tests are integrated into a CI pipeline using GitHub Actions to provide fast feedback on code changes.
 
-**Test Implementation**
-- Test independence and isolation
-- Atomic tests (one behavior per test)
-- Data-Driven Testing (DDT) with centralized test data
-- Smart explicit waits over hard-coded delays
-- Automatic screenshot capture on failures
-- Meaningful assertions with Chai
+### Quality Signals
 
-**Configuration & Security**
-- Environment-based configuration with `.env`
-- Secure credential management (gitignored secrets)
-- Centralized config access via helpers
-- Configurable timeouts and retry logic
+- Critical and smoke tests are prioritized
+- Failures in key user flows indicate release risk
+- Test results are reviewed across executions to identify stability trends
+- CI execution is used as a quality indicator, not a strict deployment blocker, for portfolio demonstration purposes.
 
-**Code Quality & Automation**
-- ESLint integration for consistency
-- Reusable helper functions and element classes
-- Modern JavaScript (ES Modules, async/await)
-- Cross-browser support (Chrome configured)
-- Headless and headed execution modes
-- CI/CD with GitHub Actions
+> Note:
+> For demonstration purposes, the CI/CD pipeline is currently executed manually via GitHub Actions.
+> In a production environment, test execution would typically be triggered automatically on pull requests and merges.
+
+### Test Reports (GitHub Pages)
+
+Allure reports are generated after each test execution to provide clear visibility into test results, failures, and execution details. Reports are automatically published to GitHub Pages via GitHub Actions to support continuous quality review after each CI run.
+
+**[View Latest Allure Report →](https://barbaraalozada.github.io/wdio-mocha/)**
 
 ---
 
-## 🔗 Additional Resources
+## 📋 Test Documentation
 
-- [WebDriverIO Documentation](https://webdriver.io/)
-- [Mocha Testing Framework](https://mochajs.org/)
-- [Chai Assertion Library](https://www.chaijs.com/)
-- [Allure Report Documentation](https://docs.qameta.io/allure/)
+Comprehensive test suite documentation is available for each feature:
+
+| Test Suite | Status | Test Cases | Automation |
+|------------|--------|------------|------------|
+| [Login](docs/test-suites/login-test-suite.md) | ✅ Automated | 18 | 94.4% |
+| [Checkboxes](docs/test-suites/checkboxes-test-suite.md) | ✅ Automated | 14 | 100% |
+| [Add/Remove Elements](docs/test-suites/add-remove-elements-test-suite.md) | ✅ Automated | 18 | 100% |
+| Dropdown | ⏳ Pending | To define | 0% |
+| Dynamic Controls | ⏳ Pending | To define | 0% |
+| File Upload | ⏳ Pending | To define | 0% |
+| Drag and Drop | ⏳ Pending | To define | 0% |
+| Hovers | ⏳ Pending | To define | 0% |
+| Sortable Data Tables | ⏳ Pending | To define | 0% |
+| File Download | ⏳ Pending | To define | 0% |
+
+**Total Test Cases**: 50 (automated) | **Pending**: 7 test suites
+
