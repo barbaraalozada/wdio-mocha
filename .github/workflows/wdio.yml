@@ -1,0 +1,181 @@
+name: WebDriverIO Tests
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_suite:
+        description: 'Test suite to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - login
+          - checkboxes
+          - add:remove:elements
+      headless:
+        description: 'Run in headless mode'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        env:
+          CI: true
+          HEADLESS: ${{ inputs.headless }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          LOGIN_USERNAME: ${{ secrets.LOGIN_USERNAME }}
+          LOGIN_PASSWORD: ${{ secrets.LOGIN_PASSWORD }}
+          DEFAULT_TIMEOUT: ${{ secrets.DEFAULT_TIMEOUT }}
+        run: |
+          set -e
+
+          echo "Running suite: ${{ inputs.test_suite }}"
+          echo "Headless mode: ${{ inputs.headless }}"
+
+          if [ "${{ inputs.test_suite }}" = "all" ]; then
+            npm run all
+          else
+            npm run "${{ inputs.test_suite }}"
+          fi
+
+      - name: Upload Allure results
+        if: always() && hashFiles('allure-results/**') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results/
+          retention-days: 7
+
+      - name: Generate environment.properties
+        if: always() && hashFiles('allure-results/**') != ''
+        run: |
+          cat > allure-results/environment.properties << EOF
+          Browser=Chrome
+          Browser version=stable
+          Platform=Linux (Ubuntu)
+          Node version=$(node --version)
+          NPM version=$(npm --version)
+          Test suite=${{ inputs.test_suite }}
+          Headless mode=${{ inputs.headless }}
+          Runner=WebDriverIO
+          Framework=Mocha
+          CI=GitHub Actions
+          Branch=${{ github.ref_name }}
+          Commit=${{ github.sha }}
+          EOF
+
+      - name: Generate categories.json
+        if: always() && hashFiles('allure-results/**') != ''
+        run: |
+          cat > allure-results/categories.json << 'EOF'
+          [
+            {
+              "name": "Ignored tests",
+              "matchedStatuses": ["skipped"]
+            },
+            {
+              "name": "Infrastructure problems",
+              "matchedStatuses": ["broken", "failed"],
+              "messageRegex": ".*(?:timeout|Timeout|ETIMEDOUT|ECONNREFUSED|ECONNRESET|socket hang up).*"
+            },
+            {
+              "name": "Element not found",
+              "matchedStatuses": ["broken", "failed"],
+              "messageRegex": ".*(?:element.*not found|no such element|cannot locate|Unable to locate).*"
+            },
+            {
+              "name": "Assertion failures",
+              "matchedStatuses": ["failed"],
+              "messageRegex": ".*(?:AssertionError|Expected|expected|assert).*"
+            },
+            {
+              "name": "Product defects",
+              "matchedStatuses": ["failed"]
+            },
+            {
+              "name": "Test defects",
+              "matchedStatuses": ["broken"]
+            }
+          ]
+          EOF
+
+      - name: Generate executor.json
+        if: always() && hashFiles('allure-results/**') != ''
+        run: |
+          cat > allure-results/executor.json << EOF
+          {
+            "name": "GitHub Actions",
+            "type": "github",
+            "url": "https://github.com/${{ github.repository }}",
+            "buildOrder": ${{ github.run_number }},
+            "buildName": "Run #${{ github.run_number }}",
+            "buildUrl": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+            "reportUrl": "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/",
+            "reportName": "Allure Report"
+          }
+          EOF
+
+      - name: Get Allure history
+        if: always() && hashFiles('allure-results/**') != ''
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+        continue-on-error: true
+
+      - name: Copy Allure history
+        if: always() && hashFiles('allure-results/**') != ''
+        run: |
+          mkdir -p allure-results/history
+          if [ -d "gh-pages/history" ]; then
+            cp -r gh-pages/history/* allure-results/history/ || true
+          fi
+
+      - name: Generate Allure report
+        if: always() && hashFiles('allure-results/**') != ''
+        run: npm run allure:generate
+
+      - name: Keep only last 5 history entries
+        if: always() && hashFiles('allure-report/**') != ''
+        run: |
+          if [ -d "allure-report/history" ]; then
+            cd allure-report/history
+            ls -t | tail -n +6 | xargs -r rm -rf
+          fi
+
+      - name: Upload Allure report
+        if: always() && hashFiles('allure-report/**') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
+          retention-days: 7
+
+      - name: Deploy Allure report to GitHub Pages
+        if: always() && hashFiles('allure-report/**') != ''
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: allure-report
+          keep_files: false
