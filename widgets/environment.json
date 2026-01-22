@@ -1,1 +1,1 @@
-[]
+[{"values":["version=stable"],"name":"Browser"},{"values":["Linux (Ubuntu)"],"name":"Platform"},{"values":["version=v20.19.6"],"name":"Node"},{"values":["version=10.8.2"],"name":"NPM"},{"values":["suite=all"],"name":"Test"},{"values":["mode=true"],"name":"Headless"},{"values":["WebDriverIO"],"name":"Runner"},{"values":["Mocha"],"name":"Framework"},{"values":["GitHub Actions"],"name":"CI"},{"values":["main"],"name":"Branch"},{"values":["3abef57230c3a422524329fac68bdcf1ddb135d8"],"name":"Commit"}]
